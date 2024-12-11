@@ -40,8 +40,8 @@ pipeline {
                 sh 'sleep 30'  // Wait for MySQL to initialize if necessary
 		
                 sh '''
-                        mysql -u ${MYSQL_USER} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
-                        mysql -u ${MYSQL_USER} ${MYSQL_DB} -e "
+                        mysql -h 127.0.0.1 -P 3306 -u ${MYSQL_USER} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
+                        mysql -h 127.0.0.1 -P 3306 -u ${MYSQL_USER} ${MYSQL_DB} -e "
                             CREATE TABLE IF NOT EXISTS users (
                                 id INT PRIMARY KEY,
                                 name VARCHAR(50)
@@ -51,7 +51,7 @@ pipeline {
                         "
                     '''  
 		sh """
-                        mysql -u ${MYSQL_USER} ${MYSQL_DB} -e "SELECT * FROM users;"
+                        mysql -h 127.0.0.1 -P 3306 -u ${MYSQL_USER} ${MYSQL_DB} -e "SELECT * FROM users;"
                     """
                 }
             }
