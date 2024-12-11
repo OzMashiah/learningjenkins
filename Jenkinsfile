@@ -30,10 +30,9 @@ pipeline {
                 }
             }
             environment {
-                MYSQL_HOST = 'localhost'
                 MYSQL_USER = 'root'
-                MYSQL_PASSWORD = 'root'
                 MYSQL_DB = 'test_db'
+		MYSQL_ALLOW_EMPTY_PASSWORD = true
             }
             steps {
                 script {
@@ -41,8 +40,8 @@ pipeline {
                 sh 'sleep 30'  // Wait for MySQL to initialize if necessary
 		
                 sh '''
-                        mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
-                        mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} ${MYSQL_DB} -e "
+                        mysql -u ${MYSQL_USER} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
+                        mysql -u ${MYSQL_USER} ${MYSQL_DB} -e "
                             CREATE TABLE IF NOT EXISTS users (
                                 id INT PRIMARY KEY,
                                 name VARCHAR(50)
@@ -52,7 +51,7 @@ pipeline {
                         "
                     '''  
 		sh """
-                        mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} ${MYSQL_DB} -e "SELECT * FROM users;"
+                        mysql -u ${MYSQL_USER} ${MYSQL_DB} -e "SELECT * FROM users;"
                     """
                 }
             }
