@@ -38,8 +38,8 @@ pipeline {
             steps {
                 script {
                 sh '''
-                        docker exec -i mysql-container mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
-                        docker exec -i mysql-container mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DB} -e "
+                        mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
+                        mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} ${MYSQL_DB} -e "
                             CREATE TABLE IF NOT EXISTS users (
                                 id INT PRIMARY KEY,
                                 name VARCHAR(50)
@@ -49,7 +49,7 @@ pipeline {
                         "
                     '''  
 		sh """
-                        docker exec -i mysql-container mysql -u${MYSQL_USER} -p${MYSQL_PASSWORD} ${MYSQL_DB} -e "SELECT * FROM users;"
+                        mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} ${MYSQL_DB} -e "SELECT * FROM users;"
                     """
                 }
             }
