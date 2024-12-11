@@ -40,8 +40,6 @@ pipeline {
 		// Ensure MySQL is initialized before running commands
                 sh 'sleep 30'  // Wait for MySQL to initialize if necessary
 		
-		sh 'ps -a' 
-
                 sh '''
                         mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
                         mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} ${MYSQL_DB} -e "
