@@ -13,7 +13,6 @@ pipeline {
             agent {
                 docker {
                     image 'node:14'
-		    args '-u root:root'
                 }
             }
             steps {
@@ -28,6 +27,7 @@ pipeline {
             agent {
                 docker {
                     image 'mysql:8'
+		    args '-u root:root -e MYSQL_ROOT_PASSWORD=root'
                 }
             }
             environment {
