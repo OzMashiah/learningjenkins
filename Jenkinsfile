@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout code from github') {
             agent any
             steps {
-                git 'https://github.com/OzMashiah/learningjenkins.git'
+                git branch: 'main', git 'https://github.com/OzMashiah/learningjenkins.git'
             }
         }
 
