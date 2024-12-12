@@ -34,11 +34,7 @@ pipeline {
                     // Run MySQL container
                     docker.image('mysql:8').withRun('-e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306') { c ->
                         // Wait for MySQL to initialize
-                        sh '''
-                            while ! mysqladmin ping -h"127.0.0.1" --silent; do
-                                sleep 1
-                            done
-                        '''
+                        sh 'sleep 10'
                         
                         // Create Database and Table, then insert values
                         sh '''
