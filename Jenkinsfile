@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Run MySQL container in detached mode with port 3306 mapped to host
-                    docker.image('mysql:8-oracle').withRun('-p 3306:3306 --network host') { 
+                    docker.image('mysql:8-oracle').withRun('-p 3306:3306 --network host') { c ->
 			sh 'whoami'
 			sh 'cat /etc/os-release'
                     }
