@@ -27,15 +27,15 @@ pipeline {
             environment {
                 MYSQL_USER = 'root'
                 MYSQL_DB = 'test_db'
-                MYSQL_ALLOW_EMPTY_PASSWORD = true
+                MYSQL_ALLOW_EMPTY_PASSWORD = 'yes'
             }
             steps {
                 script {
-                    // Run MySQL container
-                    docker.image('mysql:8').withRun('-e MYSQL_ROOT_PASSWORD=my-secret-pw -p 3306:3306') { c ->
-                        // Wait for MySQL to initialize
+                    // Run MySQL container in detached mode with port 3306 mapped to host
+                    docker.image('mysql:8').withRun('-p 3306:3306 --network host') { c ->
+                        // Wait for MySQL to initialize (you can improve this with a better wait strategy)
                         sh 'sleep 10'
-                        
+
                         // Create Database and Table, then insert values
                         sh '''
                             mysql -u ${MYSQL_USER} -h127.0.0.1 -P3306 -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
@@ -48,7 +48,7 @@ pipeline {
                                 INSERT INTO users (id, name) VALUES (2, 'Jane Doe');
                             "
                         '''
-                        
+
                         // Query the Database to verify insertion
                         sh '''
                             mysql -u ${MYSQL_USER} -h127.0.0.1 -P3306 ${MYSQL_DB} -e "SELECT * FROM users;"
