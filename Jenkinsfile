@@ -13,9 +13,9 @@ pipeline {
             agent any  // Use 'any' or specify an agent where the steps will run
             steps {
                 script {
-                    // Run the node container in detached mode within a node block
                     node {
-                        def container = docker.image('node:14').run('-d') // Run the container in detached mode
+                        // Run the node container in detached mode and keep it alive with tailing logs
+                        def container = docker.image('node:14').run('-d tail -f /dev/null')
                         try {
                             // Copy the script to the container
                             sh "docker cp script.js ${container.id}:script.js"
