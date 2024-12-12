@@ -38,25 +38,25 @@ pipeline {
             steps {
                 script {
 		// Ensure MySQL is initialized before running commands
-		sh 'chown mysql:mysql /var/lib/mysql/'	
-		sh '/usr/sbin/mysqld restart'
-		sh 'sleep 15'
-		sh '/usr/sbin/mysqld status'
+			sh 'chown mysql:mysql /var/lib/mysql/'	
+			sh '/usr/sbin/mysqld restart'
+			sh 'sleep 15'
+			sh '/usr/sbin/mysqld status'
 		
-                sh '''
-                        mysql -u ${MYSQL_USER} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
-                        mysql -u ${MYSQL_USER} ${MYSQL_DB} -e "
-                            CREATE TABLE IF NOT EXISTS users (
-                                id INT PRIMARY KEY,
-                                name VARCHAR(50)
-                            );
-                            INSERT INTO users (id, name) VALUES (1, 'John Doe');
-                            INSERT INTO users (id, name) VALUES (2, 'Jane Doe');
-                        "
-                    '''  
-		sh """
-                        mysql -u ${MYSQL_USER} ${MYSQL_DB} -e "SELECT * FROM users;"
-                    """
+                	sh '''
+                        	mysql -u ${MYSQL_USER} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
+                        	mysql -u ${MYSQL_USER} ${MYSQL_DB} -e "
+                            		CREATE TABLE IF NOT EXISTS users (
+                                		id INT PRIMARY KEY,
+                                		name VARCHAR(50)
+                            		);
+                            		INSERT INTO users (id, name) VALUES (1, 'John Doe');
+                            		INSERT INTO users (id, name) VALUES (2, 'Jane Doe');
+                        		"
+                    	'''  
+			sh """
+                        	mysql -u ${MYSQL_USER} ${MYSQL_DB} -e "SELECT * FROM users;"
+                    	"""
                 }
             }
         }
