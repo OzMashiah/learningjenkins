@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     // Run MySQL container in detached mode with port 3306 mapped to host
-                    docker.image('mysql:8').withRun('-p 3306:3306 --network host') { c ->
+                    docker.image('mysql:8-oracle').withRun('-p 3306:3306 --network host') { c ->
                         // Wait for MySQL to initialize by trying to connect with the mysql command
                         waitUntil {
                             try {
