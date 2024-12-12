@@ -12,7 +12,7 @@ pipeline {
         stage('Java Script') {
             steps {
                 script {
-                    docker.image('node:14').withRun() { c ->
+                    docker.image('node:14').withRun(-d) { c ->
                         sh "docker cp script.js ${c.id}:script.js"
                         sh "docker exec ${c.id} -c 'node script.js'"
                     }
