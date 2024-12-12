@@ -41,7 +41,7 @@ pipeline {
                 sh 'sleep 15'  // Wait for MySQL to initialize if necessary
 		sh '/usr/sbin/mysqld status'
 		sh '/usr/sbin/mysqld start'
-		sh 'sleep 15
+		sh 'sleep 15'
 		
                 sh '''
                         mysql -u ${MYSQL_USER} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
