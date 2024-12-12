@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     node {
-                        docker.image('mysql:8').withRun('-p 3306:3306 --network host') { c ->
+                        docker.image('mysql:8').withRun('-p 3306:3306') { c ->
 		            sh "docker exec ${c.id} bash -c 'whoami'"	
                             sh "docker exec ${c.id} bash -c 'mysql -e \"SELECT 1\"'"
                             sh "docker exec ${c.id} bash -c 'cat /etc/os-release'"
