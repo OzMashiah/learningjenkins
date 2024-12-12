@@ -19,8 +19,15 @@ pipeline {
                 script {
                     // Run MySQL container in detached mode with port 3306 mapped to host
                     docker.image('mysql:8').withRun('-p 3306:3306 --network host') { c ->
-                        // Wait for MySQL to initialize (you can improve this with a better wait strategy)
-                        sh 'sleep 10'
+                        // Wait for MySQL to initialize by trying to connect with the mysql command
+                        waitUntil {
+                            try {
+                                // Try to run a simple query to check if MySQL is available
+                                sh(script: 'mysql -u ${MYSQL_USER} -h127.0.0.1 -P3306 -e "SELECT 1;"', returnStatus: true) == 0
+                            } catch (e) {
+                                return false
+                            }
+                        }
 
                         // Create Database and Table, then insert values
                         sh '''
@@ -49,6 +56,8 @@ pipeline {
         always {
             // Clean up resources after the build
             echo 'Cleaning up resources...'
+            // In case the MySQL container is still running, stop it.
+            sh 'docker ps -q --filter "ancestor=mysql:8" | xargs -r docker stop'
         }
     }
 }
