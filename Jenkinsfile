@@ -8,6 +8,18 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/OzMashiah/learningjenkins.git'
             }
         }
+	
+	stage('Java Script') {
+		steps {
+			script {
+				docker.image('node:14').withRun() { c ->
+					sh "docker cp script.js ${c.id}:script.js"
+					sh "docker exec ${c.id} -c 'node script.js'" 
+				}
+			{
+		}
+	}
+
 
         stage('Run MySQL Query') {
             environment {
@@ -17,9 +29,8 @@ pipeline {
             }
             steps {
                 script {
-                    // Run MySQL container in detached mode with port 3306 mapped to host
-                    docker.image('mysql:8-oracle').withRun('-p 3306:3306 --network host') { c ->
-			sh "docker exec ${c.id} bash -c 'whoami'"		
+                    docker.image('mysql:8').withRun('-p 3306:3306 --network host') { c ->
+			sh "docker exec ${c.id} bash -c 'mysql -e 'SELECT 1''"		
 			sh "docker exec ${c.id} bash -c 'cat /etc/os-release'"
                     }
                 }
