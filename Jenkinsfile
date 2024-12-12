@@ -12,11 +12,12 @@ pipeline {
         stage('Java Script') {
             steps {
                 script {
-                    docker.image('node:14').withRun(-d) { c ->
-                        sh "docker cp script.js ${c.id}:script.js"
-                        sh "docker exec ${c.id} -c 'node script.js'"
-                    }
-                }
+			def container = docker.image('node:14').run('-d') // Run the container in detached mode
+            		try {
+                		sh "docker cp script.js ${container.id}:script.js"
+                		sh "docker exec ${container.id} node script.js"
+                    	}
+           	}
             }
         }
 
