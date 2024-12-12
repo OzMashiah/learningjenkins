@@ -38,11 +38,10 @@ pipeline {
             steps {
                 script {
 		// Ensure MySQL is initialized before running commands
-		sh 'ls -l /var/lib/mysql/'
-		sh 'ls -l /var/run/mysqld'	
-		sh '/usr/sbin/mysqld status'
-		sh '/usr/sbin/mysqld start'
+		sh 'chown mysql:mysql /var/lib/mysql/'	
+		sh '/usr/sbin/mysqld restart'
 		sh 'sleep 15'
+		sh '/usr/sbin/mysqld status'
 		
                 sh '''
                         mysql -u ${MYSQL_USER} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
