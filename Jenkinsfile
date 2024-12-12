@@ -38,7 +38,8 @@ pipeline {
             steps {
                 script {
 		// Ensure MySQL is initialized before running commands
-                sh 'sleep 15'  // Wait for MySQL to initialize if necessary
+		sh 'ls -l /var/lib/mysql/'
+		sh 'ls -l /var/run/mysqld'	
 		sh '/usr/sbin/mysqld status'
 		sh '/usr/sbin/mysqld start'
 		sh 'sleep 15'
