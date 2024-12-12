@@ -16,7 +16,10 @@ pipeline {
             		try {
                 		sh "docker cp script.js ${container.id}:script.js"
                 		sh "docker exec ${container.id} node script.js"
-                    	}
+                    	} finally {
+                		sh "docker stop ${container.id}"
+                		sh "docker rm ${container.id}"
+           			}	
            	}
             }
         }
