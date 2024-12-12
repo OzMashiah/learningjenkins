@@ -32,9 +32,10 @@ pipeline {
                     docker.image('mysql:8').withRun('-p 3306:3306 --network host') { c ->
 			sh "docker exec ${c.id} bash -c 'mysql -e 'SELECT 1''"		
 			sh "docker exec ${c.id} bash -c 'cat /etc/os-release'"
-                    }
-                }
-            }
-        }
-    }
+                    				}
+                			}
+            			}
+       	 		}
+    		}
+	}
 }
