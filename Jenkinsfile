@@ -19,8 +19,8 @@ pipeline {
                 script {
                     // Run MySQL container in detached mode with port 3306 mapped to host
                     docker.image('mysql:8-oracle').withRun('-p 3306:3306 --network host') { c ->
-			sh 'docker exec ${c.id} whoami'		
-			sh 'docker exec ${c.id} cat /etc/os-release'
+			sh "docker exec ${c.id} bash -c 'whoami'"		
+			sh "docker exec ${c.id} bash -c 'cat /etc/os-release'"
                     }
                 }
             }
