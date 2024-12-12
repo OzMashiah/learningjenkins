@@ -38,7 +38,8 @@ pipeline {
             steps {
                 script {
 		// Ensure MySQL is initialized before running commands
-                sh 'sleep 30'  // Wait for MySQL to initialize if necessary
+                sh 'sleep 15'  // Wait for MySQL to initialize if necessary
+		sh 'cat /etc/my.cnf'
 		
                 sh '''
                         mysql -u ${MYSQL_USER} -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DB};"
