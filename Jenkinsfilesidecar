@@ -9,6 +9,20 @@ pipeline {
             }
         }
 
+        stage('Run JavaScript') {
+            agent {
+                docker {
+                    image 'node:14'
+                }
+            }
+            steps {
+                script {
+                    sh 'ls -l'
+                    sh 'node script.js'
+                }
+            }
+        }
+
         stage('Run MySQL Query') {
             environment {
                 MYSQL_USER = 'root'
