@@ -23,6 +23,7 @@ pipeline {
                     			'''
                 		}
             		}
+		}
 		stage('Test') {
 			steps {
 				git 'https://github.com/AdminTurnedDevOps/go-webapp-sample.git'
