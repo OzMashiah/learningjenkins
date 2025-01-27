@@ -22,7 +22,19 @@ spec:
             containerPort: 50000
         volumeMounts:
           - name: jenkins-vol
-            mountPath: /var/jenkins_vol
+            mountPath: /var/jenkins_home  # Ensure Jenkins stores data in this directory
       volumes:
         - name: jenkins-vol
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: jenkins-pvc  # Reference the PVC
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi  # Adjust storage size as needed
