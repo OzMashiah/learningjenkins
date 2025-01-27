@@ -17,8 +17,8 @@ pipeline {
                     			if ! command -v gcc &> /dev/null
                     			then
                         			echo "GCC not found, installing..."
-                        			sudo apt update
-                        			sudo apt install -y build-essential
+                        			apt update
+                        			apt install -y build-essential
                     			fi
                     			'''
                 		}
