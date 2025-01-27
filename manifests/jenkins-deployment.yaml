@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: jenkins/jenkins:lts
+        image: mashiahoz/jenkins-gcc
         ports:
           - name: http-port
             containerPort: 8080
